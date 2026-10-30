@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Volume Power App</string>
+    <string name="accessibility_service_name">Layanan Tombol Volume Power</string>
+    <string name="accessibility_description">Menggunakan tombol volume untuk mengunci layar perangkat.</string>
+    <string name="app_instructions">Aktifkan layanan aksesibilitas di bawah ini. Setelah aktif, tekan tombol Volume Atas atau Volume Bawah satu kali untuk mengunci layar.</string>
+    <string name="open_accessibility_settings">Buka Pengaturan Aksesibilitas</string>
+    <string name="service_enabled">Status: layanan AKTIF.</string>
+    <string name="service_disabled">Status: layanan BELUM AKTIF. Aktifkan “Volume Power App” pada daftar layanan yang diunduh.</string>
+    <string name="app_warning">Catatan: saat layanan aktif, tombol Volume Atas dan Bawah diambil alih untuk mengunci layar sehingga tidak mengubah volume. Nonaktifkan layanan ini di Pengaturan Aksesibilitas untuk mengembalikan fungsi volume normal.</string>
+</resources>
