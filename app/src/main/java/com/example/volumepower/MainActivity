@@ -1,0 +1,90 @@
+package com.example.volumepower
+
+import android.app.Activity
+import android.content.ComponentName
+import android.content.Intent
+import android.os.Bundle
+import android.provider.Settings
+import android.text.TextUtils
+import android.view.Gravity
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+
+class MainActivity : Activity() {
+    private lateinit var statusText: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER_HORIZONTAL
+            setPadding(28, 36, 28, 28)
+        }
+
+        val title = TextView(this).apply {
+            text = getString(R.string.app_name)
+            textSize = 25f
+            gravity = Gravity.CENTER
+        }
+        root.addView(title, LinearLayout.LayoutParams(-1, -2))
+
+        val description = TextView(this).apply {
+            text = getString(R.string.app_instructions)
+            textSize = 16f
+            setPadding(0, 24, 0, 20)
+        }
+        root.addView(description, LinearLayout.LayoutParams(-1, -2))
+
+        statusText = TextView(this).apply {
+            textSize = 16f
+            setPadding(0, 8, 0, 20)
+        }
+        root.addView(statusText, LinearLayout.LayoutParams(-1, -2))
+
+        val settingsButton = Button(this).apply {
+            text = getString(R.string.open_accessibility_settings)
+            setOnClickListener {
+                startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            }
+        }
+        root.addView(settingsButton, LinearLayout.LayoutParams(-1, -2))
+
+        val note = TextView(this).apply {
+            text = getString(R.string.app_warning)
+            textSize = 13f
+            setPadding(0, 22, 0, 0)
+        }
+        root.addView(note, LinearLayout.LayoutParams(-1, -2))
+
+        setContentView(root)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::statusText.isInitialized) {
+            statusText.text = if (isAccessibilityServiceEnabled()) {
+                getString(R.string.service_enabled)
+            } else {
+                getString(R.string.service_disabled)
+            }
+        }
+    }
+
+    private fun isAccessibilityServiceEnabled(): Boolean {
+        val expected = ComponentName(this, VolumeKeyService::class.java)
+        val enabledServices = Settings.Secure.getString(
+            contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        ) ?: return false
+
+        val splitter = TextUtils.SimpleStringSplitter(':')
+        splitter.setString(enabledServices)
+        while (splitter.hasNext()) {
+            if (ComponentName.unflattenFromString(splitter.next()) == expected) return true
+        }
+        return false
+    }
+        }
+              
