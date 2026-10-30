@@ -1,0 +1,27 @@
+package com.example.volumepower
+
+import android.accessibilityservice.AccessibilityService
+import android.view.KeyEvent
+import android.view.accessibility.AccessibilityEvent
+
+class VolumeKeyService : AccessibilityService() {
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) = Unit
+
+    override fun onInterrupt() = Unit
+
+    override fun onKeyEvent(event: KeyEvent): Boolean {
+        val isVolumeKey = event.keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+            event.keyCode == KeyEvent.KEYCODE_VOLUME_UP
+
+        if (!isVolumeKey) return super.onKeyEvent(event)
+
+        // Trigger once per physical press, not repeatedly while the key is held.
+        if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+            performGlobalAction(GLOBAL_ACTION_LOCK_SCREEN)
+        }
+
+        // Consume both DOWN and UP so the intercepted key does not also change volume.
+        return event.action == KeyEvent.ACTION_DOWN || event.action == KeyEvent.ACTION_UP
+    }
+}
