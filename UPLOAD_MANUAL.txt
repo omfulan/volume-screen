@@ -1,0 +1,15 @@
+UPLOAD MANUAL KE GITHUB
+
+PENTING: GitHub tidak mengekstrak ZIP otomatis. Ekstrak ZIP ini dahulu.
+Lalu di halaman repository GitHub pilih Add file > Upload files.
+Pilih/seret SEMUA ISI folder hasil ekstrak (termasuk folder tersembunyi .github).
+Jangan upload folder pembungkusnya dan jangan upload ZIP sebagai satu file.
+Commit changes. Setelah itu buka tab Actions dan jalankan workflow
+"Build VolumePowerApp APK" jika belum berjalan otomatis.
+
+APK hasil build tersedia sebagai artifact:
+VolumePowerApp-release-auto-signed
+
+Catatan: APK release ditandatangani otomatis dengan debug key bawaan Android.
+Ini tidak memerlukan pembuatan keystore, tetapi build berikutnya dapat memiliki
+kunci berbeda. Untuk update aplikasi, mungkin perlu uninstall versi sebelumnya.
